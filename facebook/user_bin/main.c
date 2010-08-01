@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define k_max_buffer 200
 
 // SKU's
 struct SKU {
-  char name;
+  char *name;
   int weight;
   int cost;
   struct SKU *next;
@@ -19,7 +20,29 @@ struct SKU *build_sku(char *input);
 void add_to_list(char input) { }
 
 struct SKU *build_sku(char *input) {
+  char *sections;
+  struct SKU sku;
 
+  int index = 0;
+  sections = strtok(input, "\t");
+
+  while(sections != NULL) {
+    switch(index) {
+      case 0:
+        sku.name = sections;
+        break;
+      case 1:
+        sku.weight = atoi(sections);
+      case 2:
+        sku.cost = atoi(sections);
+    }
+
+    index++;
+    sections = strtok(NULL, "\t");
+  }
+
+  //printf("--%d--", length);
+  //printf("%s", input);
 
   return 0;
 }
